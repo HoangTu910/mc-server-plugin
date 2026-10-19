@@ -1,0 +1,1 @@
+cp build/libs/mc-server-plugin-*.jar ~/Workspace/mc-server/plugins/mc-server.jar

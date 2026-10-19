@@ -1,0 +1,13 @@
+mobs:
+  shadow_zombie:
+    max-health: 40.0
+    attack-damage: 6.0
+    movement-speed: 0.30
+    xp: 5
+
+    loot:
+      rotten-flesh-min: 1
+      rotten-flesh-max: 2
+      iron-nugget-chance: 0.25
+      iron-nugget-min: 1
+      iron-nugget-max: 2

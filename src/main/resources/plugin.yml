@@ -1,0 +1,17 @@
+name: MC-Survival-Plugin
+version: '1.0.0'
+main: com.example.survival.SurvivalPlugin
+description: MC survival server plugin
+author: hu
+api-version: '26.2'
+
+commands:
+  mob:
+    description: Spawn custom mobs
+    usage: /mob spawn shadow_zombie
+    permission: custommobs.admin
+
+permissions:
+  custommobs.admin:
+    description: Allows spawning custom mobs
+    default: op
