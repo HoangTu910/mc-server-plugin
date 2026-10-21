@@ -11,3 +11,39 @@ mobs:
       iron-nugget-chance: 0.25
       iron-nugget-min: 1
       iron-nugget-max: 2
+
+    progression:
+      xp:
+        log: 1
+        coal-ore: 3
+        iron-ore: 5
+        gold-ore: 8
+        diamond-ore: 10
+        vanilla-mob-kill: 5
+        custom-mob-kill: 15
+        boss-mob-kill: 30
+
+custom-items:
+  void_slayer:
+    material: DIAMOND_SWORD
+    amount: 1
+
+    name: "<light_purple><bold>Void Slayer</bold>"
+
+    lore:
+      - "<dark_gray>Legendary Weapon"
+      - ""
+      - "<gray>A blade forged in the void."
+      - "<gray>Its power exceeds mortal limits."
+      - ""
+      - "<light_purple>Special Ability: <white>Void Strike"
+
+    enchantments:
+      SHARPNESS: 8
+      UNBREAKING: 6
+      LOOTING: 5
+
+    ability:
+      cooldown-seconds: 10
+      range: 15.0
+      damage: 18.0

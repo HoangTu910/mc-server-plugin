@@ -87,4 +87,8 @@ public final class MobService {
                 6.0
         );
     }
+
+    public org.bukkit.configuration.file.FileConfiguration getPluginConfig() {
+        return plugin.getConfig();
+    }
 }

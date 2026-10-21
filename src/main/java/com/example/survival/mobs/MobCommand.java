@@ -21,14 +21,14 @@ public final class MobCommand implements CommandExecutor {
             String label,
             String[] args
     ) {
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage("This command must be run by a player.");
+        if (!sender.hasPermission("admin")) {
+            sender.sendMessage("You don't have permission to use this command.");
             return true;
         }
 
         if (args.length != 2
                 || !args[0].equalsIgnoreCase("spawn")) {
-            player.sendMessage(
+            sender.sendMessage(
                     "Usage: /mob spawn shadow_zombie"
             );
             return true;
@@ -37,10 +37,11 @@ public final class MobCommand implements CommandExecutor {
         MobType type = MobType.fromId(args[1]);
 
         if (type == null) {
-            player.sendMessage("Unknown mob type: " + args[1]);
+            sender.sendMessage("Unknown mob type: " + args[1]);
             return true;
         }
 
+        Player player = (Player) sender;
         Location spawnLocation = player.getLocation()
                 .add(player.getLocation().getDirection().multiply(2));
 

@@ -9,9 +9,25 @@ commands:
   mob:
     description: Spawn custom mobs
     usage: /mob spawn shadow_zombie
-    permission: custommobs.admin
+    permission: admin
+
+  rank:
+    description: View your rank and progression
+    usage: /rank
+
+  set-rank:
+    description: Set a player's rank
+    usage: /set-rank <player> <rank>
+    permission: admin
+    permission-message: "You don't have permission to use this command."
+
+  customitem:
+    description: Manage custom items
+    usage: /customitem <give|list|reload>
+    permission: admin
+    permission-message: "You don't have permission to use this command."
 
 permissions:
-  custommobs.admin:
-    description: Allows spawning custom mobs
+  admin:
+    description: Allows access to admin commands
     default: op
