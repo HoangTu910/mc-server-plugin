@@ -1,5 +1,5 @@
 package com.example.survival.mobs;
-import com.example.survival.SurvivalPlugin;
+import com.example.survival.SurvivalMainPlugin;
 
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -13,10 +13,10 @@ import org.bukkit.persistence.PersistentDataType;
  */
 public final class MobService {
 
-    private final SurvivalPlugin plugin;
+    private final SurvivalMainPlugin plugin;
     private final NamespacedKey mobTypeKey;
 
-    public MobService(SurvivalPlugin plugin) {
+    public MobService(SurvivalMainPlugin plugin) {
         this.plugin = plugin;
         this.mobTypeKey = new NamespacedKey(plugin, "custom_mob_type");
     }

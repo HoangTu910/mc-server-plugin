@@ -12,16 +12,16 @@ mobs:
       iron-nugget-min: 1
       iron-nugget-max: 2
 
-    progression:
-      xp:
-        log: 1
-        coal-ore: 3
-        iron-ore: 5
-        gold-ore: 8
-        diamond-ore: 10
-        vanilla-mob-kill: 5
-        custom-mob-kill: 15
-        boss-mob-kill: 30
+progression:
+  xp:
+    log: 1
+    coal-ore: 3
+    iron-ore: 5
+    gold-ore: 8
+    diamond-ore: 10
+    vanilla-mob-kill: 5
+    custom-mob-kill: 15
+    boss-mob-kill: 30
 
 custom-items:
   void_slayer:
@@ -47,3 +47,33 @@ custom-items:
       cooldown-seconds: 10
       range: 15.0
       damage: 18.0
+
+  shadow_stone:
+    material: NETHERITE_INGOT
+    amount: 1
+    name: "<gray>Shadow Stone</gray>"
+    lore:
+      - "<dark_gray>Rare Material"
+      - ""
+      - "<gray>A mysterious stone imbued with shadow energy."
+    enchantments:
+      UNBREAKING: 5
+
+mob-drops:
+  shadow_zombie:
+      item: shadow_stone
+      chance: 1
+
+traders:
+  void_trader:
+    name: "<light_purple><bold>Void Trader</bold>"
+    profession: CLERIC
+
+    trades:
+      void_slayer_trade:
+        input:
+          custom-item: shadow_stone
+          amount: 32
+        output:
+          custom-item: void_slayer
+        max-uses: 999999

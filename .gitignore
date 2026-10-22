@@ -5,3 +5,4 @@ bin/
 gradlew
 gradlew.bat
 gradle/
+server/

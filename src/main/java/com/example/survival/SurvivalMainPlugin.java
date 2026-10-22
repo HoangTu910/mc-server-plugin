@@ -7,16 +7,19 @@ import com.example.survival.customitem.CustomItemCommand;
 import com.example.survival.customitem.CustomItemService;
 import com.example.survival.listener.CombatListener;
 import com.example.survival.listener.CustomItemAbilityListener;
+import com.example.survival.listener.CustomItemDropListener;
 import com.example.survival.listener.RankListener;
 import com.example.survival.mobs.MobCommand;
 import com.example.survival.mobs.MobService;
 import com.example.survival.rank.RankCommand;
 import com.example.survival.rank.RankService;
 import com.example.survival.rank.SetRankCommand;
+import com.example.survival.trader.TraderCommand;
+import com.example.survival.trader.TraderService;
 
 import java.util.Objects;
 
-public final class SurvivalPlugin extends JavaPlugin {
+public final class SurvivalMainPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
@@ -27,7 +30,8 @@ public final class SurvivalPlugin extends JavaPlugin {
         MobService        mobService        = new MobService(this);
         RankService       rankService       = new RankService(this);
         CustomItemService customItemService = new CustomItemService(this);
-
+        TraderService     traderService     = new TraderService(this, customItemService);
+        
         /* Register the combat listener*/
         getServer().getPluginManager().registerEvents(
                 new CombatListener(this, mobService),
@@ -41,6 +45,11 @@ public final class SurvivalPlugin extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(
                 new CustomItemAbilityListener(this, customItemService),
+                this
+        );
+
+        getServer().getPluginManager().registerEvents(
+                new CustomItemDropListener(this, customItemService, mobService),
                 this
         );
 
@@ -65,6 +74,11 @@ public final class SurvivalPlugin extends JavaPlugin {
                 "Command 'customitem' is missing from plugin.yml"
         );
 
+        PluginCommand traderCommand = Objects.requireNonNull(
+                getCommand("trader"),
+                "Command 'trader' is missing from plugin.yml"
+        );
+
         // Set the executor for the rank command
         rankCommand.setExecutor(new RankCommand(rankService));
         setRankCommand.setExecutor(new SetRankCommand(rankService));
@@ -75,6 +89,7 @@ public final class SurvivalPlugin extends JavaPlugin {
                         this::reloadConfig
                 )
         );
+        traderCommand.setExecutor(new TraderCommand(traderService));
     }
 
     @Override

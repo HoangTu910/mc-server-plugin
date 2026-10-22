@@ -1,6 +1,6 @@
 name: MC-Survival-Plugin
 version: '1.0.0'
-main: com.example.survival.SurvivalPlugin
+main: com.example.survival.SurvivalMainPlugin
 description: MC survival server plugin
 author: hu
 api-version: '26.2'
@@ -26,6 +26,11 @@ commands:
     usage: /customitem <give|list|reload>
     permission: admin
     permission-message: "You don't have permission to use this command."
+
+  trader:
+    description: Spawn a custom trader
+    usage: /trader spawn <trader_id>
+    permission: admin
 
 permissions:
   admin:

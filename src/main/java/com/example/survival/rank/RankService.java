@@ -9,16 +9,16 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import com.example.survival.SurvivalPlugin;
+import com.example.survival.SurvivalMainPlugin;
 
 public class RankService {
-    private final SurvivalPlugin plugin;
+    private final SurvivalMainPlugin plugin;
     private final File dataFile;
     private final Map<UUID, PlayerProgress> playerProgressMap = new ConcurrentHashMap<>();
 
     private YamlConfiguration data;
 
-    public RankService(SurvivalPlugin plugin) {
+    public RankService(SurvivalMainPlugin plugin) {
         this.plugin = plugin;
         this.dataFile = new File(plugin.getDataFolder(), "player-data.yml");
         loadData();

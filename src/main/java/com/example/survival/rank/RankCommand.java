@@ -1,5 +1,6 @@
 package com.example.survival.rank;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,7 +22,9 @@ public final class RankCommand implements CommandExecutor{
             String[] args
     ) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage("This command must be run by a player.");
+            sender.sendMessage(
+                    ChatColor.RED + "This command can only be used in-game."
+            );
             return true;
         }
 

@@ -1,7 +1,7 @@
 package com.example.survival.listener;
 
 import java.util.concurrent.ThreadLocalRandom;
-import com.example.survival.SurvivalPlugin;
+import com.example.survival.SurvivalMainPlugin;
 import com.example.survival.mobs.MobService;
 import com.example.survival.mobs.MobType;
 
@@ -17,11 +17,11 @@ import org.bukkit.inventory.ItemStack;
 
 public final class CombatListener implements Listener {
 
-    private final SurvivalPlugin plugin;
+    private final SurvivalMainPlugin plugin;
     private final MobService mobService;
 
     public CombatListener(
-            SurvivalPlugin plugin,
+            SurvivalMainPlugin plugin,
             MobService mobService
     ) {
         this.plugin = plugin;
