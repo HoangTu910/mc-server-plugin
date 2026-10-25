@@ -47,6 +47,7 @@ custom-items:
       cooldown-seconds: 10
       range: 15.0
       damage: 18.0
+      mana-cost: 30
 
   shadow_stone:
     material: NETHERITE_INGOT
@@ -59,10 +60,47 @@ custom-items:
     enchantments:
       UNBREAKING: 5
 
+  storm_caller:
+    # The base item sets combat stats (axe: heavy hits, disables shields);
+    # item-model replaces how it looks with the 3D thunder hammer.
+    material: DIAMOND_AXE
+    amount: 1
+    # Custom model from the resource pack: resourcepack/assets/survival/items/storm_caller.json
+    item-model: survival:storm_caller
+
+    name: "<gradient:#7dd3fc:#facc15><bold>Storm Caller</bold></gradient>"
+
+    lore:
+      - "<dark_gray>Legendary Thunder Hammer"
+      - ""
+      - "<gray>The sky answers its call."
+      - ""
+      - "<aqua>Special Ability: <white>Lightning Strike"
+      - "<dark_gray>Right-click to strike where you aim."
+      - "<dark_gray>Lightning chains to nearby enemies."
+
+    enchantments:
+      SHARPNESS: 10
+      UNBREAKING: 6
+
+    ability:
+      cooldown-seconds: 6
+      mana-cost: 50
+      range: 20.0
+      damage: 15.0                 # per bolt
+      lightning-strikes: 2        # bolts per use
+      strike-interval-ticks: 6    # delay between bolts (20 ticks = 1 second)
+      burn-seconds: 4             # mobs hit by a bolt catch fire
+      place-fire: true            # light the ground around each bolt (can spread like normal fire!)
+      fire-radius: 2.0
+      chain-count: 3              # extra mobs the lightning jumps to
+      chain-radius: 6.0           # max jump distance in blocks
+      chain-damage-multiplier: 0.6 # each jump deals 60% of the previous hit
+
 mob-drops:
   shadow_zombie:
-      item: shadow_stone
-      chance: 1
+    item: shadow_stone
+    chance: 1
 
 traders:
   void_trader:
@@ -77,3 +115,12 @@ traders:
         output:
           custom-item: void_slayer
         max-uses: 999999
+
+mana:
+  max: 100
+  regen-per-second: 5
+
+hud:
+  update-ticks: 5 # 20 ticks = 1 second
+  bar-length: 10 # number of "|" characters per bar (text HUD only)
+  resource-pack: true # image bars; players need the resource pack. false = plain text bars

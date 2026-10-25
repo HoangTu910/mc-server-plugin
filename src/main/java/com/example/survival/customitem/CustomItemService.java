@@ -86,6 +86,22 @@ public final class CustomItemService {
             meta.lore(lore);
         }
 
+        // Custom look from the resource pack, e.g. "survival:storm_caller"
+        // -> resourcepack/assets/survival/items/storm_caller.json
+        String itemModel = section.getString("item-model");
+
+        if (itemModel != null) {
+            NamespacedKey modelKey = NamespacedKey.fromString(itemModel);
+
+            if (modelKey == null) {
+                plugin.getLogger().warning(
+                        "Invalid item-model for " + itemId + ": " + itemModel
+                );
+            } else {
+                meta.setItemModel(modelKey);
+            }
+        }
+
         item.setItemMeta(meta);
 
         ConfigurationSection enchantments =
@@ -136,14 +152,19 @@ public final class CustomItemService {
     }
 
     public boolean isCustomItem(ItemStack item, String itemId) {
+        return itemId.equals(getItemId(item));
+    }
+
+    /**
+     * Returns the custom item id stored on the item, or null for normal items.
+     */
+    public String getItemId(ItemStack item) {
         if (item == null || item.isEmpty()) {
-            return false;
+            return null;
         }
 
-        String storedId = item.getPersistentDataContainer()
+        return item.getPersistentDataContainer()
                 .get(customItemIdKey, PersistentDataType.STRING);
-
-        return itemId.equals(storedId);
     }
 
     public List<String> getItemIds() {

@@ -1,0 +1,79 @@
+{
+  "providers": [
+    {
+      "type": "bitmap",
+      "file": "survival:hud/health_frame.png",
+      "ascent": -26,
+      "height": 9,
+      "chars": [
+        "\ue000"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "survival:hud/mana_frame.png",
+      "ascent": -16,
+      "height": 9,
+      "chars": [
+        "\ue001"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "survival:hud/fill.png",
+      "ascent": -28,
+      "height": 5,
+      "chars": [
+        "\ue002"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "survival:hud/fill.png",
+      "ascent": -18,
+      "height": 5,
+      "chars": [
+        "\ue003"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "survival:hud/digits.png",
+      "ascent": -28,
+      "height": 5,
+      "chars": [
+        "\ue010\ue011\ue012\ue013\ue014\ue015\ue016\ue017\ue018\ue019\ue01a"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "survival:hud/digits.png",
+      "ascent": -18,
+      "height": 5,
+      "chars": [
+        "\ue020\ue021\ue022\ue023\ue024\ue025\ue026\ue027\ue028\ue029\ue02a"
+      ]
+    },
+    {
+      "type": "space",
+      "advances": {
+        "\uf801": -1,
+        "\uf811": 1,
+        "\uf802": -2,
+        "\uf812": 2,
+        "\uf803": -4,
+        "\uf813": 4,
+        "\uf804": -8,
+        "\uf814": 8,
+        "\uf805": -16,
+        "\uf815": 16,
+        "\uf806": -32,
+        "\uf816": 32,
+        "\uf807": -64,
+        "\uf817": 64,
+        "\uf808": -128,
+        "\uf818": 128
+      }
+    }
+  ]
+}
