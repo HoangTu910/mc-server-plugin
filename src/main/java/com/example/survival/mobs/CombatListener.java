@@ -1,9 +1,7 @@
-package com.example.survival.listener;
+package com.example.survival.mobs;
 
 import java.util.concurrent.ThreadLocalRandom;
 import com.example.survival.SurvivalMainPlugin;
-import com.example.survival.mobs.MobService;
-import com.example.survival.mobs.MobType;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;

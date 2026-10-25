@@ -1,4 +1,4 @@
-package com.example.survival.listener;
+package com.example.survival.mobs;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,8 +13,6 @@ import org.bukkit.entity.Entity;
 
 import com.example.survival.SurvivalMainPlugin;
 import com.example.survival.customitem.CustomItemService;
-import com.example.survival.mobs.MobService;
-import com.example.survival.mobs.MobType;
 
 public final class CustomItemDropListener implements Listener {
     private final CustomItemService customItemService;

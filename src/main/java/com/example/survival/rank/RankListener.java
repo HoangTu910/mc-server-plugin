@@ -1,9 +1,6 @@
-package com.example.survival.listener;
+package com.example.survival.rank;
 
 import com.example.survival.mobs.MobService;
-import com.example.survival.rank.PlayerProgress;
-import com.example.survival.rank.Rank;
-import com.example.survival.rank.RankService;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;

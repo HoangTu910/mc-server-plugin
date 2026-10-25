@@ -1,7 +1,6 @@
-package com.example.survival.listener;
+package com.example.survival.customitem;
 
 import com.example.survival.SurvivalMainPlugin;
-import com.example.survival.customitem.CustomItemService;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
