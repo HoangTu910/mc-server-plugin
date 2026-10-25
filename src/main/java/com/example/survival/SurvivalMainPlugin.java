@@ -1,17 +1,19 @@
 package com.example.survival;
 
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.example.survival.customitem.CustomItemAbilityListener;
 import com.example.survival.customitem.CustomItemCommand;
+import com.example.survival.customitem.CustomItemDropListener;
 import com.example.survival.customitem.CustomItemService;
-import com.example.survival.listener.CombatListener;
-import com.example.survival.listener.CustomItemAbilityListener;
-import com.example.survival.listener.CustomItemDropListener;
-import com.example.survival.listener.RankListener;
+import com.example.survival.mobs.MobCombatListener;
 import com.example.survival.mobs.MobCommand;
 import com.example.survival.mobs.MobService;
 import com.example.survival.rank.RankCommand;
+import com.example.survival.rank.RankListener;
 import com.example.survival.rank.RankService;
 import com.example.survival.rank.SetRankCommand;
 import com.example.survival.trader.TraderCommand;
@@ -31,69 +33,41 @@ public final class SurvivalMainPlugin extends JavaPlugin {
         RankService       rankService       = new RankService(this);
         CustomItemService customItemService = new CustomItemService(this);
         TraderService     traderService     = new TraderService(this, customItemService);
-        
-        /* Register the combat listener*/
-        getServer().getPluginManager().registerEvents(
-                new CombatListener(this, mobService),
-                this
-        );
 
-        getServer().getPluginManager().registerEvents(
+        registerListeners(
+                new MobCombatListener(this, mobService),
                 new RankListener(rankService, mobService),
-                this
-        );
-
-        getServer().getPluginManager().registerEvents(
                 new CustomItemAbilityListener(this, customItemService),
-                this
+                new CustomItemDropListener(this, customItemService, mobService)
         );
 
-        getServer().getPluginManager().registerEvents(
-                new CustomItemDropListener(this, customItemService, mobService),
-                this
-        );
-
-        /* Register the mob command */
-        PluginCommand mobCommand = Objects.requireNonNull(
-                getCommand("mob"),
-                "Command 'mob' is missing from plugin.yml"
-        );
-
-        PluginCommand setRankCommand = Objects.requireNonNull(
-                getCommand("set-rank"),
-                "Command 'set-rank' is missing from plugin.yml"
-        );
-
-        PluginCommand rankCommand = Objects.requireNonNull(
-                getCommand("rank"),
-                "Command 'rank' is missing from plugin.yml"
-        );
-
-        PluginCommand customItemCommand = Objects.requireNonNull(
-                getCommand("customitem"),
-                "Command 'customitem' is missing from plugin.yml"
-        );
-
-        PluginCommand traderCommand = Objects.requireNonNull(
-                getCommand("trader"),
-                "Command 'trader' is missing from plugin.yml"
-        );
-
-        // Set the executor for the rank command
-        rankCommand.setExecutor(new RankCommand(rankService));
-        setRankCommand.setExecutor(new SetRankCommand(rankService));
-        mobCommand.setExecutor(new MobCommand(mobService));
-        customItemCommand.setExecutor(
-                new CustomItemCommand(
-                        customItemService,
-                        this::reloadConfig
-                )
-        );
-        traderCommand.setExecutor(new TraderCommand(traderService));
+        registerCommand("mob", new MobCommand(mobService));
+        registerCommand("rank", new RankCommand(rankService));
+        registerCommand("set-rank", new SetRankCommand(rankService));
+        registerCommand("customitem", new CustomItemCommand(customItemService, this::reloadConfig));
+        registerCommand("trader", new TraderCommand(traderService));
     }
 
     @Override
     public void onDisable() {
         getLogger().info("CustomSurvival disabled.");
+    }
+
+    private void registerListeners(Listener... listeners) {
+        for (Listener listener : listeners) {
+            getServer().getPluginManager().registerEvents(listener, this);
+        }
+    }
+
+    /**
+     * Binds an executor to a command declared in plugin.yml.
+     * If the executor also implements TabCompleter, Bukkit uses it for tab completion.
+     */
+    private void registerCommand(String name, CommandExecutor executor) {
+        PluginCommand command = Objects.requireNonNull(
+                getCommand(name),
+                "Command '" + name + "' is missing from plugin.yml"
+        );
+        command.setExecutor(executor);
     }
 }

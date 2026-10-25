@@ -1,7 +1,6 @@
-package com.example.survival.listener;
+package com.example.survival.customitem;
 
-import com.example.survival.SurvivalMainPlugin;
-import com.example.survival.customitem.CustomItemService;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
@@ -21,12 +20,12 @@ import java.util.UUID;
 public final class CustomItemAbilityListener implements Listener {
 
     private static final String VOID_SLAYER_ID = "void_slayer";
-    private final SurvivalMainPlugin plugin;
+    private final JavaPlugin plugin;
     private final CustomItemService customItemService;
     private final Map<UUID, Long> cooldowns = new HashMap<>();
 
     public CustomItemAbilityListener(
-            SurvivalMainPlugin plugin,
+            JavaPlugin plugin,
             CustomItemService customItemService
     ) {
         this.plugin = plugin;

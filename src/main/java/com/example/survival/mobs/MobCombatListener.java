@@ -1,9 +1,7 @@
-package com.example.survival.listener;
+package com.example.survival.mobs;
 
 import java.util.concurrent.ThreadLocalRandom;
-import com.example.survival.SurvivalMainPlugin;
-import com.example.survival.mobs.MobService;
-import com.example.survival.mobs.MobType;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -15,13 +13,13 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
-public final class CombatListener implements Listener {
+public final class MobCombatListener implements Listener {
 
-    private final SurvivalMainPlugin plugin;
+    private final JavaPlugin plugin;
     private final MobService mobService;
 
-    public CombatListener(
-            SurvivalMainPlugin plugin,
+    public MobCombatListener(
+            JavaPlugin plugin,
             MobService mobService
     ) {
         this.plugin = plugin;
