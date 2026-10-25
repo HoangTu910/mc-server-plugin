@@ -1,0 +1,9 @@
+{
+  "release-type": "java",
+  "include-component-in-tag": false,
+  "packages": {
+    ".": {
+      "package-name": "mc-server-plugin"
+    }
+  }
+}
