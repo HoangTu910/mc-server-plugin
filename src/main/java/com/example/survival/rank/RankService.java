@@ -9,16 +9,16 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import com.example.survival.SurvivalMainPlugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class RankService {
-    private final SurvivalMainPlugin plugin;
+    private final JavaPlugin plugin;
     private final File dataFile;
     private final Map<UUID, PlayerProgress> playerProgressMap = new ConcurrentHashMap<>();
 
     private YamlConfiguration data;
 
-    public RankService(SurvivalMainPlugin plugin) {
+    public RankService(JavaPlugin plugin) {
         this.plugin = plugin;
         this.dataFile = new File(plugin.getDataFolder(), "player-data.yml");
         loadData();
@@ -54,6 +54,15 @@ public class RankService {
 
     public Rank getNextRank(Player player) {
         return Rank.getRankByExp(getPlayerProgress(player).getTotalXp() + 1);
+    }
+
+    /**
+     * Reads the XP reward for a progression source from
+     * {@code progression.xp.<source>} in config.yml.
+     */
+    public int getXpReward(String source, int defaultXp) {
+        return Math.max(0, plugin.getConfig()
+                .getInt("progression.xp." + source, defaultXp));
     }
 
     public void addXp(Player player, int xp) {

@@ -1,4 +1,4 @@
-package com.example.survival.listener;
+package com.example.survival.customitem;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,18 +11,17 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 
-import com.example.survival.SurvivalMainPlugin;
-import com.example.survival.customitem.CustomItemService;
+import org.bukkit.plugin.java.JavaPlugin;
 import com.example.survival.mobs.MobService;
 import com.example.survival.mobs.MobType;
 
 public final class CustomItemDropListener implements Listener {
     private final CustomItemService customItemService;
     private final MobService mobService;
-    private final SurvivalMainPlugin plugin;
+    private final JavaPlugin plugin;
     
     public CustomItemDropListener(
-            SurvivalMainPlugin plugin,
+            JavaPlugin plugin,
             CustomItemService customItemService,
             MobService mobService
     ) {

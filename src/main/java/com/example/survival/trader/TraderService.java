@@ -15,18 +15,18 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
 import org.bukkit.persistence.PersistentDataType;
 
-import com.example.survival.SurvivalMainPlugin;
+import org.bukkit.plugin.java.JavaPlugin;
 import com.example.survival.customitem.CustomItemService;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
 public final class TraderService {
-    private final SurvivalMainPlugin plugin;
+    private final JavaPlugin plugin;
     private final CustomItemService customItemService;
     private final MiniMessage miniMessage = MiniMessage.miniMessage();
     private final NamespacedKey traderIdKey;
 
-    public TraderService(SurvivalMainPlugin plugin, CustomItemService customItemService) {
+    public TraderService(JavaPlugin plugin, CustomItemService customItemService) {
         this.plugin = plugin;
         this.customItemService = customItemService;
         this.traderIdKey = new NamespacedKey(plugin, "trader_id");

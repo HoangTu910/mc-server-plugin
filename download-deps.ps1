@@ -3,13 +3,13 @@ $ErrorActionPreference = "Stop"
 Set-Location $PSScriptRoot
 
 Write-Host "=== Checking prerequisites ===" -ForegroundColor Cyan
-try {
-    $javaVer = java -version 2>&1 | Select-Object -First 1
-    Write-Host "Found Java: $javaVer" -ForegroundColor Green
-} catch {
+if (-not (Get-Command java -ErrorAction SilentlyContinue)) {
     Write-Error "Java is not installed or not in PATH.`nPlease install JDK 25 (or JDK 21+) from: https://adoptium.net/temurin/releases/?version=25"
     exit 1
 }
+# java -version writes to stderr; run via cmd so PowerShell 5.1 doesn't treat it as an error
+$javaVer = cmd /c "java -version 2>&1" | Select-Object -First 1
+Write-Host "Found Java: $javaVer" -ForegroundColor Green
 
 # 1. Prepare server directories
 New-Item -ItemType Directory -Force server\plugins | Out-Null
@@ -50,19 +50,23 @@ $paperBuild = "134"
 $paperJar = "paper-$paperVersion-$paperBuild.jar"
 $targetJarPath = "server\$paperJar"
 
-$paperUrl = if ($env:PAPER_DOWNLOAD_URL) {
-    $env:PAPER_DOWNLOAD_URL
-} else {
-    "https://api.papermc.io/v2/projects/paper/versions/$paperVersion/builds/$paperBuild/downloads/$paperJar"
-}
-
 if (-not (Test-Path $targetJarPath)) {
     Write-Host "Downloading Paper $paperVersion (build $paperBuild)..." -ForegroundColor Cyan
     try {
-        if (Get-Command curl.exe -ErrorAction SilentlyContinue) {
-            curl.exe -fL -o $targetJarPath $paperUrl
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        $paperUrl = if ($env:PAPER_DOWNLOAD_URL) {
+            $env:PAPER_DOWNLOAD_URL
         } else {
-            [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+            # PaperMC Fill v3 API (the old v2 API returns 410 Gone)
+            $buildInfo = Invoke-RestMethod -Uri "https://fill.papermc.io/v3/projects/paper/versions/$paperVersion/builds/$paperBuild" -UserAgent "mc-server-plugin-setup"
+            $buildInfo.downloads.'server:default'.url
+        }
+        if (Get-Command curl.exe -ErrorAction SilentlyContinue) {
+            # -sS: progress output on stderr would trip $ErrorActionPreference = "Stop"
+            curl.exe -fsSL -o $targetJarPath $paperUrl
+            if ($LASTEXITCODE -ne 0) { throw "curl exited with code $LASTEXITCODE" }
+        } else {
+            $ProgressPreference = "SilentlyContinue"
             Invoke-WebRequest -Uri $paperUrl -OutFile $targetJarPath
         }
         Write-Host "Paper downloaded successfully." -ForegroundColor Green

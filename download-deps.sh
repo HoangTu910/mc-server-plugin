@@ -51,10 +51,23 @@ fi
 PAPER_VERSION="26.2"
 PAPER_BUILD="134"
 PAPER_JAR="paper-${PAPER_VERSION}-${PAPER_BUILD}.jar"
-PAPER_URL="${PAPER_DOWNLOAD_URL:-https://api.papermc.io/v2/projects/paper/versions/${PAPER_VERSION}/builds/${PAPER_BUILD}/downloads/${PAPER_JAR}}"
-
 if [[ ! -f "server/${PAPER_JAR}" ]]; then
   echo "Downloading Paper ${PAPER_VERSION} (build ${PAPER_BUILD})..."
+  PAPER_URL="${PAPER_DOWNLOAD_URL:-}"
+  if [[ -z "$PAPER_URL" ]]; then
+    # PaperMC Fill v3 API (the old v2 API returns 410 Gone)
+    BUILD_API="https://fill.papermc.io/v3/projects/paper/versions/${PAPER_VERSION}/builds/${PAPER_BUILD}"
+    if command -v curl >/dev/null 2>&1; then
+      BUILD_JSON="$(curl -fsSL -A mc-server-plugin-setup "$BUILD_API")"
+    else
+      BUILD_JSON="$(wget -qO- -U mc-server-plugin-setup "$BUILD_API")"
+    fi
+    PAPER_URL="$(printf '%s' "$BUILD_JSON" | grep -o "\"url\":\"[^\"]*${PAPER_JAR}\"" | head -n1 | cut -d'"' -f4)"
+    if [[ -z "$PAPER_URL" ]]; then
+      echo "Error: could not resolve Paper download URL from $BUILD_API" >&2
+      exit 1
+    fi
+  fi
   if command -v curl >/dev/null 2>&1; then
     curl --fail --location --progress-bar --output "server/${PAPER_JAR}" "$PAPER_URL"
   elif command -v wget >/dev/null 2>&1; then

@@ -1,9 +1,6 @@
-package com.example.survival.listener;
+package com.example.survival.rank;
 
 import com.example.survival.mobs.MobService;
-import com.example.survival.rank.PlayerProgress;
-import com.example.survival.rank.Rank;
-import com.example.survival.rank.RankService;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -59,7 +56,7 @@ public final class RankListener implements Listener {
             return;
         }
 
-        int xp = getXp("progression.xp." + path, 0);
+        int xp = rankService.getXpReward(path, 0);
         rankService.addXp(player, xp);
     }
 
@@ -75,8 +72,8 @@ public final class RankListener implements Listener {
         boolean customMob = mobService.isCustomMob(entity);
 
         int xp = customMob
-                ? getXp("progression.xp.custom-mob-kill", 15)
-                : getXp("progression.xp.vanilla-mob-kill", 5);
+                ? rankService.getXpReward("custom-mob-kill", 15)
+                : rankService.getXpReward("vanilla-mob-kill", 5);
 
         rankService.addXp(killer, xp);
     }
@@ -97,10 +94,5 @@ public final class RankListener implements Listener {
                         .append(Component.text(": ", NamedTextColor.GRAY))
                         .append(message.color(NamedTextColor.WHITE))
         );
-    }
-
-    private int getXp(String path, int defaultValue) {
-        return Math.max(0, mobService.getPluginConfig()
-                .getInt(path, defaultValue));
     }
 }
